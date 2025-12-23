@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  repo_sanity_checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Verify required files exist
+        run: |
+          test -f infra/00_bootstrap.sql
+          test -f infra/01_grants.sql
+          test -f docs/runbook.md
+          echo "Required files present ✅"
